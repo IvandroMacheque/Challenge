@@ -95,26 +95,6 @@ export default function Contatos() {
               </div>
             </div>
           </div>
-
-          {/* Social Proof pequena */}
-          <div className="p-8 bg-gray-50 dark:bg-gray-900 rounded-4xl border border-gray-100 dark:border-gray-800">
-            <p className="italic text-gray-600 dark:text-gray-400 mb-4">
-              {i18n.language === 'en' 
-                ? "\"EcoPlus was fundamental for our environmental licensing in record time.\"" 
-                : "\"A EcoPlus foi fundamental para o nosso licenciamento ambiental em tempo recorde.\""}
-            </p>
-            <div className="flex items-center gap-3">
-              <div className="w-10 h-10 rounded-full bg-green-200 dark:bg-green-800"></div>
-              <div>
-                <p className="font-bold text-gray-900 dark:text-white text-sm">
-                  {i18n.language === 'en' ? "Operations Director" : "Director de Operações"}
-                </p>
-                <p className="text-xs text-gray-400 uppercase tracking-widest font-bold">
-                  {i18n.language === 'en' ? "Extractive Industry" : "Indústria Extractiva"}
-                </p>
-              </div>
-            </div>
-          </div>
         </motion.div>
 
         {/* COLUNA DIREITA: FORMULÁRIO STEPPER */}
