@@ -1,0 +1,38 @@
+@import "tailwindcss";
+
+@theme {
+  --color-primary: #0ea5e9;
+  --color-secondary: #6366f1;
+  --font-sans: "Inter", system-ui, -apple-system, sans-serif;
+}
+
+:root {
+  background-color: #ffffff;
+  color: #111827; /* Gray-900 */
+  font-family: var(--font-sans);
+}
+
+body {
+  margin: 0;
+  padding: 0;
+  overflow-x: hidden;
+  width: 100%;
+  -webkit-text-size-adjust: 100%;
+  line-height: 1.5;
+}
+
+#root {
+  width: 100%;
+}
+
+/* Melhoria global de contraste para textos descritivos */
+p {
+  color: #374151; /* Gray-700 */
+}
+
+/* Utilitário para esconder blobs no mobile se necessário */
+.mobile-hide-blobs {
+  @media (max-width: 768px) {
+    display: none;
+  }
+}
