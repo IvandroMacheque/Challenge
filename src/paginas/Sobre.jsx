@@ -239,8 +239,8 @@ export default function Sobre() {
                 transition={{ delay: idx * 0.15 }}
                 className="group relative pt-8"
               >
-                {/* Linha conectora (visível apenas no desktop) */}
-                {idx !== 4 && <div className="hidden md:block absolute top-12 left-1/2 w-full h-[2px] bg-gray-100 dark:bg-gray-800"></div>}
+                {/* Linha conectora */}
+                {idx !== 4 && <div className="hidden md:block absolute top-12 ml-6 w-full h-[2px] bg-gray-100 dark:bg-gray-800"></div>}
                 
                 <div className="relative z-10 w-16 h-16 bg-green-50 dark:bg-green-900/30 text-green-700 dark:text-green-400 rounded-2xl flex items-center justify-center text-2xl font-black mb-6 group-hover:bg-green-700 group-hover:text-white transition-colors border border-green-100 dark:border-green-800">
                   {fase.num}
