@@ -6,10 +6,20 @@
   --font-sans: "Inter", system-ui, -apple-system, sans-serif;
 }
 
+@variant dark (&:where(.dark, .dark *));
+
 :root {
-  background-color: #ffffff;
-  color: #111827; /* Gray-900 */
+  --background: #ffffff;
+  --foreground: #111827;
+  background-color: var(--background);
+  color: var(--foreground);
   font-family: var(--font-sans);
+  transition: background-color 0.3s ease, color 0.3s ease;
+}
+
+.dark {
+  --background: #030712; 
+  --foreground: #ffffff;
 }
 
 body {
@@ -19,20 +29,10 @@ body {
   width: 100%;
   -webkit-text-size-adjust: 100%;
   line-height: 1.5;
+  background-color: var(--background);
+  color: var(--foreground);
 }
 
 #root {
   width: 100%;
-}
-
-/* Melhoria global de contraste para textos descritivos */
-p {
-  color: #374151; /* Gray-700 */
-}
-
-/* Utilitário para esconder blobs no mobile se necessário */
-.mobile-hide-blobs {
-  @media (max-width: 768px) {
-    display: none;
-  }
 }

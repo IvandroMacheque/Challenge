@@ -1,10 +1,13 @@
 import React from 'react'
 // eslint-disable-next-line no-unused-vars
 import { motion } from 'framer-motion'
-import { ShieldCheck, TrendingUp, Leaf, ArrowRight, Menu } from 'lucide-react'
+import { ArrowRight, ShieldCheck as ShieldCheckIcon, TrendingUp as TrendingUpIcon, Leaf as LeafIcon } from 'lucide-react'
 import { Link } from 'react-router-dom'
+import { useTranslation } from 'react-i18next'
+import Parceiros from '../componentes/Parceiros'
 
 export default function Home() {
+  const { t, i18n } = useTranslation()
   
   const containerVariants = {
     hidden: { opacity: 0 },
@@ -20,14 +23,13 @@ export default function Home() {
   }
 
   return (
-    <div className="relative w-full min-h-screen bg-white overflow-x-hidden font-sans">
-      {/* 1. HERO SECTION (Foco em Dor e Conversão) */}
-      <section id="inicio" className="relative min-h-screen flex items-center justify-center pt-40 pb-12 px-6">
+    <div className="relative w-full min-h-screen bg-white dark:bg-gray-950 transition-colors duration-300 font-sans">
+      {/* 1. HERO SECTION */}
+      <section id="inicio" className="relative min-h-screen flex items-center justify-center pt-40 pb-12 px-6 overflow-hidden">
         
-        {/* Elemento de background abstrato - Escondido no mobile para evitar 'zoom' visual */}
-        <div className="hidden md:block absolute top-0 left-1/2 -translate-x-1/2 w-full h-full max-w-5xl opacity-10 pointer-events-none">
-          <div className="absolute top-20 left-10 w-96 h-96 bg-green-600 rounded-full mix-blend-multiply filter blur-3xl opacity-50 animate-blob"></div>
-          <div className="absolute top-40 right-10 w-96 h-96 bg-green-400 rounded-full mix-blend-multiply filter blur-3xl opacity-50 animate-blob animation-delay-2000"></div>
+        <div className="hidden md:block absolute top-0 left-1/2 -translate-x-1/2 w-full h-full max-w-5xl opacity-10 dark:opacity-20 pointer-events-none">
+          <div className="absolute top-20 left-10 w-96 h-96 bg-green-600 rounded-full mix-blend-multiply dark:mix-blend-lighten filter blur-3xl opacity-50 animate-blob"></div>
+          <div className="absolute top-40 right-10 w-96 h-96 bg-green-400 rounded-full mix-blend-multiply dark:mix-blend-lighten filter blur-3xl opacity-50 animate-blob animation-delay-2000"></div>
         </div>
 
         <motion.div 
@@ -36,18 +38,17 @@ export default function Home() {
           initial="hidden"
           animate="visible"
         >
-          <motion.div variants={itemVariants} className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-green-50 border border-green-200 text-green-700 font-medium text-sm mb-6">
+          <motion.div variants={itemVariants} className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-green-50 dark:bg-green-950/30 border border-green-200 dark:border-green-800 text-green-700 dark:text-green-400 font-medium text-sm mb-6">
             <span className="w-2 h-2 rounded-full bg-green-600 animate-pulse"></span>
-            Consultoria Técnica e Ambiental em Moçambique
+            {t('hero_tagline')}
           </motion.div>
           
-          <motion.h1 variants={itemVariants} className="text-5xl md:text-7xl font-extrabold text-gray-900 tracking-tight leading-[1.1] mb-6">
-            Evite riscos legais e garanta a <span className="text-transparent bg-clip-text bg-linear-to-r from-green-700 to-green-500">conformidade</span> do seu negócio.
+          <motion.h1 variants={itemVariants} className="text-5xl md:text-7xl font-extrabold text-gray-900 dark:text-white tracking-tight leading-[1.1] mb-6">
+            {t('hero_title').split(' ').map((word, i) => word === 'conformidade' || word === 'compliance.' ? <span key={i} className="text-transparent bg-clip-text bg-linear-to-r from-green-700 to-green-500">{word} </span> : word + ' ')}
           </motion.h1>
           
-          <motion.p variants={itemVariants} className="text-lg md:text-xl text-gray-600 mb-10 max-w-2xl mx-auto">
-            Transformamos exigências regulatórias em oportunidades estratégicas. 
-            Auditoria, Gestão de Resíduos e práticas ESG com quem entende do mercado nacional.
+          <motion.p variants={itemVariants} className="text-lg md:text-xl text-gray-600 dark:text-gray-400 mb-10 max-w-2xl mx-auto">
+            {t('hero_subtitle')}
           </motion.p>
           
           <motion.div variants={itemVariants} className="flex flex-col sm:flex-row items-center justify-center gap-4">
@@ -56,28 +57,28 @@ export default function Home() {
               whileTap={{ scale: 0.95 }}
               className="w-full sm:w-auto px-8 py-4 bg-green-700 text-white rounded-full font-bold text-lg shadow-lg shadow-green-700/30 hover:bg-green-800 transition-colors flex items-center justify-center gap-2"
             >
-              Solicitar Proposta Técnica
+              {t('hero_cta_proposal')}
               <ArrowRight size={20} />
             </motion.button>
             <motion.button 
               whileHover={{ scale: 1.05 }}
               whileTap={{ scale: 0.95 }}
-              className="w-full sm:w-auto px-8 py-4 bg-white text-green-800 border border-gray-200 rounded-full font-bold text-lg hover:border-green-700 hover:bg-green-50 transition-colors"
+              className="w-full sm:w-auto px-8 py-4 bg-white dark:bg-gray-800 text-green-800 dark:text-green-400 border border-gray-200 dark:border-gray-700 rounded-full font-bold text-lg hover:border-green-700 dark:hover:border-green-500 hover:bg-green-50 dark:hover:bg-gray-700 transition-colors"
             >
-              <Link to="/servicos">Nossos Serviços</Link>
+              <Link to="/servicos">{t('hero_cta_services')}</Link>
             </motion.button>
           </motion.div>
         </motion.div>
       </section>
 
       {/* 2. NUMBERS / SOCIAL PROOF (Credibilidade) */}
-      <section className="bg-green-900 py-16 px-6">
-        <div className="max-w-6xl mx-auto grid grid-cols-2 md:grid-cols-4 gap-8 text-center md:divide-x divide-green-800/50">
+      <section className="bg-green-900 dark:bg-green-950 py-16 px-6 transition-colors duration-300">
+        <div className="max-w-6xl mx-auto grid grid-cols-2 md:grid-cols-4 gap-8 text-center md:divide-x divide-green-800/50 dark:divide-green-900/50">
           {[
-            { number: "+20", label: "Especialistas" },
-            { number: "ISO", label: "9001 e 14001" },
-            { number: "5 Anos", label: "De Mercado" },
-            { number: "100%", label: "Cobertura Nacional" }
+            { number: "+20", label: t('stat_specialists') },
+            { number: "ISO", label: "9001 & 14001" },
+            { number: "5 Yrs", label: t('stat_market') },
+            { number: "100%", label: t('stat_coverage') }
           ].map((stat, index) => (
             <motion.div 
               key={index}
@@ -88,36 +89,38 @@ export default function Home() {
               className="flex flex-col items-center"
             >
               <h3 className="text-4xl md:text-5xl font-extrabold text-white mb-2">{stat.number}</h3>
-              <p className="text-green-300 font-medium">{stat.label}</p>
+              <p className="text-green-300 dark:text-green-500 font-medium">{stat.label}</p>
             </motion.div>
           ))}
         </div>
       </section>
 
-      {/* 3. VALUE PROPOSITION CARDS (Tradução de serviço para resultado) */}
-      <section id="servicos" className="py-24 px-6 bg-gray-50">
+      <Parceiros />
+
+      {/* 3. VALUE PROPOSITION CARDS */}
+      <section id="servicos" className="py-24 px-6 bg-gray-50 dark:bg-gray-900/50 transition-colors duration-300">
         <div className="max-w-6xl mx-auto">
           <div className="text-center mb-16">
-            <h2 className="text-3xl md:text-4xl font-bold text-gray-900 mb-4">Por que as empresas escolhem a EcoPlus?</h2>
-            <p className="text-gray-700 max-w-2xl mx-auto">Não entregamos apenas relatórios, entregamos segurança jurídica e eficiência operacional.</p>
+            <h2 className="text-3xl md:text-4xl font-bold text-gray-900 dark:text-white mb-4">{t('why_title')}</h2>
+            <p className="text-gray-700 dark:text-gray-400 max-w-2xl mx-auto">{t('why_subtitle')}</p>
           </div>
 
           <div className="grid md:grid-cols-3 gap-8">
             {[
               {
-                icon: <ShieldCheck size={32} className="text-green-600" />,
-                title: "Risco Zero em Fiscalizações",
-                desc: "Auditorias rigorosas para garantir que sua empresa cumpra 100% da legislação ambiental moçambicana."
+                icon: <ShieldCheckIcon size={32} className="text-green-600 dark:text-green-400" />,
+                title: t('feature_audit_title'),
+                desc: t('feature_audit_desc')
               },
               {
-                icon: <TrendingUp size={32} className="text-green-600" />,
-                title: "ESG como Vantagem Competitiva",
-                desc: "Implementamos práticas sustentáveis que atraem investidores e melhoram a reputação da sua marca."
+                icon: <TrendingUpIcon size={32} className="text-green-600 dark:text-green-400" />,
+                title: t('feature_esg_title'),
+                desc: t('feature_esg_desc')
               },
               {
-                icon: <Leaf size={32} className="text-green-600" />,
-                title: "Gestão Inteligente de Resíduos",
-                desc: "Redução de custos operacionais e mitigação de riscos sanitários para indústrias e hospitais."
+                icon: <LeafIcon size={32} className="text-green-600 dark:text-green-400" />,
+                title: t('feature_waste_title'),
+                desc: t('feature_waste_desc')
               }
             ].map((feature, idx) => (
               <motion.div
@@ -126,42 +129,87 @@ export default function Home() {
                 whileInView={{ opacity: 1, y: 0 }}
                 viewport={{ once: true, margin: "-100px" }}
                 whileHover={{ y: -10 }}
-                className="bg-white p-8 rounded-3xl shadow-sm border border-gray-100 hover:shadow-xl transition-all duration-300"
+                className="bg-white dark:bg-gray-800 p-8 rounded-3xl shadow-sm border border-gray-100 dark:border-gray-700 hover:shadow-xl dark:hover:shadow-black/20 transition-all duration-300"
               >
-                <div className="w-14 h-14 bg-green-50 rounded-2xl flex items-center justify-center mb-6">
+                <div className="w-14 h-14 bg-green-50 dark:bg-green-900/30 rounded-2xl flex items-center justify-center mb-6 text-green-700 dark:text-green-400">
                   {feature.icon}
                 </div>
-                <h3 className="text-xl font-bold text-gray-900 mb-3">{feature.title}</h3>
-                <p className="text-gray-700 leading-relaxed">{feature.desc}</p>
+                <h3 className="text-xl font-bold text-gray-900 dark:text-white mb-3">{feature.title}</h3>
+                <p className="text-gray-700 dark:text-gray-400 leading-relaxed">{feature.desc}</p>
               </motion.div>
             ))}
           </div>
         </div>
       </section>
 
-      {/* 4. BOTTOM CTA BANNER */}
-      <section id="contactos" className="py-20 px-6">
+      {/* 4. PROJETOS DE IMPACTO*/}
+      <section className="py-24 px-6 bg-white dark:bg-gray-950 transition-colors duration-300 overflow-hidden">
+        <div className="max-w-6xl mx-auto">
+          <div className="mb-16 md:flex justify-between items-end">
+            <div className="max-w-2xl">
+              <h2 className="text-4xl font-bold text-gray-900 dark:text-white mb-4">{t('impact_title')}</h2>
+              <p className="text-xl text-gray-700 dark:text-gray-400">{t('impact_subtitle')}</p>
+            </div>
+            <Link to="/servicos" className="hidden md:flex items-center gap-2 text-green-700 dark:text-green-500 font-bold hover:gap-4 transition-all">
+              {t('impact_view_all')} <ArrowRight size={20} />
+            </Link>
+          </div>
+
+          <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
+            {[
+              { titulo: "Restauração de Mangais", titulo_en: "Mangrove Restoration", local: "Zambézia & Sofala", img: "/images/Aquacultura.jpg" },
+              { titulo: "Habitação Sustentável", titulo_en: "Sustainable Housing", local: "Niassa (Metarica, Maua)", img: "/images/mulher_na_estufa.jpg" },
+              { titulo: "Projecto Escola Limpa", titulo_en: "Clean School Project", local: "Maputo, Moçambique", img: "/images/batatas.jpg" }
+            ].map((proj, idx) => (
+              <motion.div 
+                key={idx}
+                initial={{ opacity: 0, scale: 0.95 }}
+                whileInView={{ opacity: 1, scale: 1 }}
+                viewport={{ once: true }}
+                transition={{ delay: idx * 0.1 }}
+                className="group cursor-pointer"
+              >
+                <div className="relative overflow-hidden rounded-4xl aspect-square mb-6 shadow-lg">
+                  <img 
+                    src={proj.img} 
+                    alt={proj.titulo} 
+                    className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700"
+                  />
+                  <div className="absolute inset-0 bg-green-900/60 opacity-0 group-hover:opacity-100 transition-opacity flex flex-col justify-end p-8 backdrop-blur-[2px]">
+                    <span className="text-white/80 text-sm font-bold uppercase tracking-widest mb-1">{proj.local}</span>
+                    <h4 className="text-white text-2xl font-black leading-tight">
+                      {i18n.language === 'en' ? proj.titulo_en : proj.titulo}
+                    </h4>
+                  </div>
+                </div>
+              </motion.div>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* 5. BOTTOM CTA BANNER */}
+      <section id="contactos" className="py-20 px-6 bg-white dark:bg-gray-950 transition-colors duration-300">
         <motion.div 
           initial={{ opacity: 0, scale: 0.95 }}
           whileInView={{ opacity: 1, scale: 1 }}
           viewport={{ once: true }}
           className="max-w-5xl mx-auto bg-linear-to-br from-green-800 to-green-600 rounded-[2.5rem] p-10 md:p-16 text-center text-white shadow-2xl relative overflow-hidden"
         >
-          {/* Círculos decorativos do Banner */}
           <div className="absolute top-0 right-0 w-64 h-64 bg-white opacity-5 rounded-full blur-3xl -translate-y-1/2 translate-x-1/2"></div>
           <div className="absolute bottom-0 left-0 w-64 h-64 bg-black opacity-10 rounded-full blur-3xl translate-y-1/2 -translate-x-1/2"></div>
 
           <div className="relative z-10">
-            <h2 className="text-3xl md:text-5xl font-bold mb-6">Pronto para blindar sua empresa?</h2>
+            <h2 className="text-3xl md:text-5xl font-bold mb-6">{t('cta_banner_title')}</h2>
             <p className="text-green-100 text-lg mb-10 max-w-2xl mx-auto">
-              Pare de adiar a regularização ambiental. Fale com um de nossos especialistas hoje e descubra o plano ideal para o seu negócio.
+              {t('cta_banner_text')}
             </p>
             <motion.button 
               whileHover={{ scale: 1.05 }}
               whileTap={{ scale: 0.95 }}
               className="px-8 py-4 bg-white text-green-800 rounded-full font-bold text-lg shadow-lg hover:shadow-xl transition-all"
             >
-              Falar com um Especialista Agora
+              {t('cta_banner_btn')}
             </motion.button>
           </div>
         </motion.div>

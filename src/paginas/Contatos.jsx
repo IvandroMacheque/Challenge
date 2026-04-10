@@ -1,189 +1,211 @@
-import React, { useState } from 'react'
+import { useState } from 'react'
 // eslint-disable-next-line no-unused-vars
 import { motion, AnimatePresence } from 'framer-motion'
-import { MapPin, Mail, Phone, ArrowRight, ArrowLeft, CheckCircle2, Building2 } from 'lucide-react'
+import { Send, MapPin, Mail, Phone, CheckCircle2, ArrowRight } from 'lucide-react'
+import { useTranslation } from 'react-i18next'
 
-export default function Contactos() {
+export default function Contatos() {
   const [step, setStep] = useState(1)
-  const [formData, setFormData] = useState({
-    setor: '',
-    servico: '',
-    nome: '',
-    email: '',
-    telefone: ''
-  })
+  const [isSent, setIsSent] = useState(false)
+  const { t, i18n } = useTranslation()
 
-  const nextStep = () => setStep(prev => prev + 1)
-  const prevStep = () => setStep(prev => prev - 1)
-
-  // Animações de transição entre os passos
-  const formVariants = {
-    hidden: { opacity: 0, y: 20 },
-    visible: { opacity: 1, y: 0, transition: { duration: 0.6, ease: "easeOut" } },
-    exit: { opacity: 0, y: -20, transition: { duration: 0.4 } }
+  const entryVariant = {
+    hidden: { opacity: 0, x: -20 },
+    visible: { opacity: 1, x: 0, transition: { duration: 0.8, ease: "easeOut" } }
   }
 
-  // Variante para a entrada das colunas principais
-  const entryVariant = {
-    hidden: { opacity: 0, y: 30 },
-    visible: { opacity: 1, y: 0, transition: { duration: 0.8, ease: "easeOut" } }
+  const formVariants = {
+    hidden: { opacity: 0, y: 10 },
+    visible: { opacity: 1, y: 0, transition: { duration: 0.4 } },
+    exit: { opacity: 0, y: -10, transition: { duration: 0.2 } }
+  }
+
+  const handleNext = () => setStep(step + 1)
+  const handleSubmit = (e) => {
+    e.preventDefault()
+    setIsSent(true)
   }
 
   return (
-    <div className="w-full bg-white min-h-screen overflow-x-hidden font-sans pt-44 md:pt-32 pb-24">
+    <div className="w-full bg-white dark:bg-gray-950 min-h-screen overflow-x-hidden font-sans pt-44 md:pt-32 pb-24 transition-colors duration-300">
 
       <div className="max-w-7xl mx-auto px-6 grid lg:grid-cols-2 gap-16 items-start">
         
-        {/* COLUNA ESQUERDA: Dados Reais do Portfólio */}
+        {/* COLUNA ESQUERDA: INFOS E IMPACTO */}
         <motion.div 
-          initial="hidden" 
-          animate="visible" 
-          variants={entryVariant}
+          initial="hidden" animate="visible" variants={entryVariant}
+          className="space-y-12"
         >
-          <span className="text-green-700 font-bold tracking-widest uppercase text-sm mb-4 block">
-            Canais de Atendimento
-          </span>
-          <h1 className="text-4xl md:text-6xl font-black text-gray-900 leading-tight mb-6">
-            Solicite uma <br />
-            <span className="text-green-700">proposta técnica.</span>
-          </h1>
-          <p className="text-lg text-gray-600 mb-12 max-w-lg">
-            Nossa equipa multidisciplinar está pronta para atuar em projetos de alta complexidade em todo o território nacional.
-          </p>
+          <div>
+            <h1 className="text-5xl md:text-6xl font-black text-gray-900 dark:text-white mb-6 leading-tight">
+              {t('contact_title').split(' ').map((word, i) => word.toLowerCase() === 'sucesso.' || word.toLowerCase() === 'success.' ? <span key={i} className="text-green-700 dark:text-green-500">{word} </span> : word + ' ')}
+            </h1>
+            <p className="text-xl text-gray-600 dark:text-gray-400 leading-relaxed">
+              {t('contact_subtitle')}
+            </p>
+          </div>
 
           <div className="space-y-8">
-            {/* Endereço Físico */}
-            <div className="flex items-start gap-5">
-              <div className="w-12 h-12 bg-green-50 text-green-700 rounded-2xl flex items-center justify-center shrink-0">
+            <div className="flex items-start gap-4">
+              <div className="w-12 h-12 bg-green-50 dark:bg-green-900/30 rounded-2xl flex items-center justify-center text-green-700 dark:text-green-400 shrink-0">
                 <MapPin size={24} />
               </div>
               <div>
-                <h4 className="font-bold text-gray-900">Endereço</h4>
-                <p className="text-gray-600 mt-1">Rua da Frente de Libertação de Moçambique, 155<br/>Sommershield, Maputo</p>
+                <h4 className="font-bold text-gray-900 dark:text-white text-lg">{t('contact_hq')}</h4>
+                <a 
+                  href="https://www.google.com/maps/search/?api=1&query=Rua+da+Frente+de+Liberta%C3%A7%C3%A3o+de+Mo%C3%A7ambique+155+Sommershield+Maputo"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="text-gray-600 dark:text-gray-400 hover:text-green-700 dark:hover:text-green-400 transition-colors"
+                >
+                  Rua da Frente de Libertação de Moçambique, 155, Sommershield, Maputo
+                </a>
               </div>
             </div>
 
-            {/* Email Corporativo */}
-            <div className="flex items-start gap-5">
-              <div className="w-12 h-12 bg-green-50 text-green-700 rounded-2xl flex items-center justify-center shrink-0">
+            <div className="flex items-start gap-4">
+              <div className="w-12 h-12 bg-green-50 dark:bg-green-900/30 rounded-2xl flex items-center justify-center text-green-700 dark:text-green-400 shrink-0">
                 <Mail size={24} />
               </div>
               <div>
-                <h4 className="font-bold text-gray-900">E-mail Oficial</h4>
-                <p className="text-gray-600 mt-1">geral@ecoplus.co.mz</p>
+                <h4 className="font-bold text-gray-900 dark:text-white text-lg">{t('contact_email')}</h4>
+                <a 
+                  href="mailto:geral@ecoplus.co.mz"
+                  className="text-gray-600 dark:text-gray-400 hover:text-green-700 dark:hover:text-green-400 transition-colors"
+                >
+                  geral@ecoplus.co.mz
+                </a>
               </div>
             </div>
 
-            {/* Contactos Telefónicos */}
-            <div className="flex items-start gap-5">
-              <div className="w-12 h-12 bg-green-50 text-green-700 rounded-2xl flex items-center justify-center shrink-0">
+            <div className="flex items-start gap-4">
+              <div className="w-12 h-12 bg-green-50 dark:bg-green-900/30 rounded-2xl flex items-center justify-center text-green-700 dark:text-green-400 shrink-0">
                 <Phone size={24} />
               </div>
               <div>
-                <h4 className="font-bold text-gray-900">Telefones</h4>
-                <p className="text-gray-600 mt-1">+258 87 711 5816 | +258 83 32 80 508</p>
+                <h4 className="font-bold text-gray-900 dark:text-white text-lg">{t('contact_support')}</h4>
+                <a 
+                  href="https://wa.me/258877115816"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="text-gray-600 dark:text-gray-400 hover:text-green-700 dark:hover:text-green-400 transition-colors"
+                >
+                  +258 87 711 5816
+                </a>
+              </div>
+            </div>
+          </div>
+
+          {/* Social Proof pequena */}
+          <div className="p-8 bg-gray-50 dark:bg-gray-900 rounded-4xl border border-gray-100 dark:border-gray-800">
+            <p className="italic text-gray-600 dark:text-gray-400 mb-4">
+              {i18n.language === 'en' 
+                ? "\"EcoPlus was fundamental for our environmental licensing in record time.\"" 
+                : "\"A EcoPlus foi fundamental para o nosso licenciamento ambiental em tempo recorde.\""}
+            </p>
+            <div className="flex items-center gap-3">
+              <div className="w-10 h-10 rounded-full bg-green-200 dark:bg-green-800"></div>
+              <div>
+                <p className="font-bold text-gray-900 dark:text-white text-sm">
+                  {i18n.language === 'en' ? "Operations Director" : "Director de Operações"}
+                </p>
+                <p className="text-xs text-gray-400 uppercase tracking-widest font-bold">
+                  {i18n.language === 'en' ? "Extractive Industry" : "Indústria Extractiva"}
+                </p>
               </div>
             </div>
           </div>
         </motion.div>
 
-        {/* COLUNA DIREITA: Formulário Inteligente */}
+        {/* COLUNA DIREITA: FORMULÁRIO STEPPER */}
         <motion.div 
-          initial="hidden" 
-          animate="visible" 
-          variants={entryVariant}
+          initial="hidden" animate="visible" variants={entryVariant}
           transition={{ delay: 0.2, duration: 0.8, ease: "easeOut" }}
-          className="bg-gray-50 p-8 md:p-12 rounded-[3rem] border border-gray-100 shadow-2xl shadow-gray-200/50"
+          className="bg-gray-50 dark:bg-gray-900 p-8 md:p-12 rounded-[3rem] border border-gray-100 dark:border-gray-800 shadow-2xl shadow-gray-200/50 dark:shadow-black/40"
         >
-          {/* Indicador de Progresso */}
-          <div className="flex gap-2 mb-10">
-            {[1, 2, 3].map((i) => (
-              <div key={i} className={`h-1.5 flex-1 rounded-full transition-all ${step >= i ? 'bg-green-700' : 'bg-gray-200'}`} />
-            ))}
-          </div>
+          {!isSent ? (
+            <>
+              {/* Stepper Progress */}
+              <div className="flex gap-2 mb-10">
+                {[1, 2, 3].map(i => (
+                  <div 
+                    key={i} 
+                    className={`h-1.5 flex-1 rounded-full transition-all duration-500 ${step >= i ? 'bg-green-600' : 'bg-gray-200 dark:bg-gray-800'}`}
+                  />
+                ))}
+              </div>
 
-          <div className="min-h-[350px]">
-            <AnimatePresence mode="wait">
-              
-              {/* PASSO 1: Seleção de Setor */}
-              {step === 1 && (
-                <motion.div key="step1" variants={formVariants} initial="hidden" animate="visible" exit="exit">
-                  <h3 className="text-2xl font-bold text-gray-900 mb-6">Em qual setor a sua organização atua?</h3>
-                  <div className="grid grid-cols-1 gap-3">
-                    {['Indústria e Fabrico', 'Agronegócio', 'Saúde e Hospitalar', 'Infraestruturas', 'Instituição Pública'].map((setor) => (
-                      <button 
-                        key={setor}
-                        onClick={() => { setFormData({...formData, setor}); nextStep() }}
-                        className="w-full text-left p-4 rounded-2xl border-2 border-gray-100 bg-white hover:border-green-600 hover:bg-green-50 transition-all font-semibold text-gray-700 flex justify-between items-center group"
-                      >
-                        {setor}
-                        <ArrowRight size={18} className="opacity-0 group-hover:opacity-100 transition-all" />
-                      </button>
-                    ))}
-                  </div>
-                </motion.div>
-              )}
-
-              {/* PASSO 2: Necessidade Técnica */}
-              {step === 2 && (
-                <motion.div key="step2" variants={formVariants} initial="hidden" animate="visible" exit="exit">
-                  <h3 className="text-2xl font-bold text-gray-900 mb-6">Qual serviço técnico procura?</h3>
-                  <div className="grid grid-cols-1 gap-3">
-                    {['Auditoria Ambiental', 'Avaliação de Impacto (AIAS)', 'Gestão de Resíduos', 'Consultoria ESG', 'Conformidade Legal'].map((servico) => (
-                      <button 
-                        key={servico}
-                        onClick={() => { setFormData({...formData, servico}); nextStep() }}
-                        className="w-full text-left p-4 rounded-2xl border-2 border-gray-100 bg-white hover:border-green-600 hover:bg-green-50 transition-all font-semibold text-gray-700"
-                      >
-                        {servico}
-                      </button>
-                    ))}
-                  </div>
-                  <button onClick={prevStep} className="mt-6 text-gray-400 font-bold flex items-center gap-2 hover:text-gray-600">
-                    <ArrowLeft size={18} /> Voltar
-                  </button>
-                </motion.div>
-              )}
-
-              {/* PASSO 3: Identificação Corporativa */}
-              {step === 3 && (
-                <motion.div key="step3" variants={formVariants} initial="hidden" animate="visible" exit="exit" className="space-y-4">
-                  <h3 className="text-2xl font-bold text-gray-900 mb-6">Dados para envio da Proposta</h3>
-                  
-                  <div className="space-y-3">
-                    <input type="text" placeholder="Nome Completo" className="w-full p-4 rounded-2xl bg-white border-2 border-gray-100 focus:border-green-600 outline-none transition-all" />
-                    <input type="email" placeholder="E-mail Corporativo" className="w-full p-4 rounded-2xl bg-white border-2 border-gray-100 focus:border-green-600 outline-none transition-all" />
-                    <input type="tel" placeholder="Telefone / WhatsApp" className="w-full p-4 rounded-2xl bg-white border-2 border-gray-100 focus:border-green-600 outline-none transition-all" />
-                  </div>
-
-                  <div className="flex gap-3 pt-4">
-                    <button onClick={prevStep} className="p-4 rounded-2xl border-2 border-gray-100 text-gray-400 hover:bg-white transition-all">
-                      <ArrowLeft size={24} />
+              <AnimatePresence mode="wait">
+                {step === 1 && (
+                  <motion.div 
+                    key="step1" variants={formVariants} initial="hidden" animate="visible" exit="exit"
+                    className="space-y-6"
+                  >
+                    <h3 className="text-2xl font-bold text-gray-900 dark:text-white mb-2">{t('contact_step1_title')}</h3>
+                    <input type="text" placeholder={i18n.language === 'en' ? "Full Name" : "Nome Completo"} className="w-full bg-white dark:bg-gray-800 border-none rounded-2xl p-5 focus:ring-2 focus:ring-green-600 outline-none dark:text-white" />
+                    <input type="email" placeholder={i18n.language === 'en' ? "Work Email" : "E-mail de Trabalho"} className="w-full bg-white dark:bg-gray-800 border-none rounded-2xl p-5 focus:ring-2 focus:ring-green-600 outline-none dark:text-white" />
+                    <button onClick={handleNext} className="w-full bg-green-700 text-white rounded-2xl p-5 font-bold text-lg flex items-center justify-center gap-2 hover:bg-green-800 transition-all">
+                      {t('contact_btn_continue')} <ArrowRight size={20} />
                     </button>
-                    <button onClick={nextStep} className="flex-1 bg-green-700 text-white p-4 rounded-2xl font-bold hover:bg-green-800 transition-all shadow-lg shadow-green-700/20">
-                      Solicitar Proposta Técnica
+                  </motion.div>
+                )}
+
+                {step === 2 && (
+                  <motion.div 
+                    key="step2" variants={formVariants} initial="hidden" animate="visible" exit="exit"
+                    className="space-y-6"
+                  >
+                    <h3 className="text-2xl font-bold text-gray-900 dark:text-white mb-2">{t('contact_step2_title')}</h3>
+                    <input type="text" placeholder={i18n.language === 'en' ? "Company Name" : "Nome da Empresa"} className="w-full bg-white dark:bg-gray-800 border-none rounded-2xl p-5 focus:ring-2 focus:ring-green-600 outline-none dark:text-white" />
+                    <select className="w-full bg-white dark:bg-gray-800 border-none rounded-2xl p-5 focus:ring-2 focus:ring-green-600 outline-none dark:text-white appearance-none">
+                      <option>{i18n.language === 'en' ? "Industry Type" : "Tipo de Indústria"}</option>
+                      <option>{i18n.language === 'en' ? "Mining" : "Mineração"}</option>
+                      <option>{i18n.language === 'en' ? "Energy" : "Energia"}</option>
+                      <option>{i18n.language === 'en' ? "Agriculture" : "Agricultura"}</option>
+                      <option>{i18n.language === 'en' ? "Others" : "Outros"}</option>
+                    </select>
+                    <button onClick={handleNext} className="w-full bg-green-700 text-white rounded-2xl p-5 font-bold text-lg flex items-center justify-center gap-2 hover:bg-green-800 transition-all">
+                      {t('contact_btn_continue')} <ArrowRight size={20} />
                     </button>
-                  </div>
-                </motion.div>
-              )}
+                  </motion.div>
+                )}
 
-              {/* PASSO 4: Finalização Realista */}
-              {step === 4 && (
-                <motion.div key="step4" initial={{ scale: 0.9, opacity: 0 }} animate={{ scale: 1, opacity: 1 }} transition={{ duration: 0.8 }} className="text-center py-10">
-                  <div className="w-20 h-20 bg-green-100 text-green-700 rounded-full flex items-center justify-center mx-auto mb-6">
-                    <CheckCircle2 size={40} />
-                  </div>
-                  <h3 className="text-3xl font-bold text-gray-900 mb-4">Pedido Enviado</h3>
-                  <p className="text-gray-600 leading-relaxed">
-                    Recebemos o seu interesse em <strong>{formData.servico}</strong> para o setor de <strong>{formData.setor}</strong>. 
-                    Nossa equipa técnica entrará em contacto em breve para alinhar os detalhes.
-                  </p>
-                </motion.div>
-              )}
-
-            </AnimatePresence>
-          </div>
+                {step === 3 && (
+                  <motion.div 
+                    key="step3" variants={formVariants} initial="hidden" animate="visible" exit="exit"
+                    className="space-y-6"
+                  >
+                    <h3 className="text-2xl font-bold text-gray-900 dark:text-white mb-2">{t('contact_step3_title')}</h3>
+                    <textarea rows="4" placeholder={i18n.language === 'en' ? "Describe your needs briefly..." : "Descreva brevemente sua necessidade..."} className="w-full bg-white dark:bg-gray-800 border-none rounded-2xl p-5 focus:ring-2 focus:ring-green-600 outline-none dark:text-white"></textarea>
+                    <button onClick={handleSubmit} className="w-full bg-green-700 text-white rounded-2xl p-5 font-bold text-lg flex items-center justify-center gap-2 hover:bg-green-800 transition-all">
+                      {t('contact_btn_send')} <Send size={20} />
+                    </button>
+                  </motion.div>
+                )}
+              </AnimatePresence>
+            </>
+          ) : (
+            <motion.div 
+              initial={{ scale: 0.9, opacity: 0 }} animate={{ scale: 1, opacity: 1 }}
+              className="text-center py-12"
+            >
+              <div className="w-24 h-24 bg-green-100 dark:bg-green-950 text-green-600 dark:text-green-400 rounded-full flex items-center justify-center mx-auto mb-8 shadow-inner">
+                <CheckCircle2 size={48} />
+              </div>
+              <h3 className="text-3xl font-black text-gray-900 dark:text-white mb-4">{t('contact_success_title')}</h3>
+              <p className="text-gray-600 dark:text-gray-400 mb-8 leading-relaxed">
+                {t('contact_success_desc')}
+              </p>
+              <button 
+                onClick={() => { setIsSent(false); setStep(1); }}
+                className="text-green-700 dark:text-green-400 font-bold hover:underline"
+              >
+                {t('contact_back_form')}
+              </button>
+            </motion.div>
+          )}
         </motion.div>
+
       </div>
 
     </div>

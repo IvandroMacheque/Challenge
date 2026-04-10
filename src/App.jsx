@@ -4,6 +4,8 @@ import Sobre from './paginas/Sobre'
 import Servicos from './paginas/Servicos'
 import Contatos from './paginas/Contatos'
 import Header from './componentes/Header'
+import Footer from './componentes/Footer'
+import WhatsAppButton from './componentes/WhatsAppButton'
 import ScrollToTop from './componentes/ScrollToTop'
 
 function App() {
@@ -17,6 +19,8 @@ function App() {
         <Route path="/servicos" element={<Servicos />} />
         <Route path="/contactos" element={<Contatos />} />
       </Routes>
+      <WhatsAppButton />
+      <Footer />
     </Router>
   )
 }
