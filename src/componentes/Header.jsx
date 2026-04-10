@@ -1,5 +1,5 @@
 import { useState } from 'react'
-import { Link } from 'react-router-dom'
+import { Link, NavLink } from 'react-router-dom'
 // eslint-disable-next-line no-unused-vars
 import { motion, AnimatePresence } from 'framer-motion'
 import { Leaf, Menu, X, Globe } from 'lucide-react'
@@ -17,6 +17,11 @@ export default function Header() {
     i18n.changeLanguage(nextLang)
   }
 
+  const navLinkStyle = ({ isActive }) => 
+    isActive 
+      ? "text-green-700 dark:text-green-500 font-bold transition-colors" 
+      : "hover:text-green-700 dark:hover:text-green-400 transition-colors"
+
   return (
     <>
       <header className="fixed top-6 left-1/2 -translate-x-1/2 w-[90%] max-w-5xl z-50">
@@ -29,9 +34,9 @@ export default function Header() {
           
           {/* Navegação Desktop */}
           <nav className="hidden md:flex items-center gap-6 font-semibold text-gray-600 dark:text-gray-300">
-            <Link to="/" className="hover:text-green-700 dark:hover:text-green-400 transition-colors">{t('nav_inicio')}</Link>
-            <Link to="/sobre" className="hover:text-green-700 dark:hover:text-green-400 transition-colors">{t('nav_sobre')}</Link>
-            <Link to="/servicos" className="hover:text-green-700 dark:hover:text-green-400 transition-colors">{t('nav_servicos')}</Link>
+            <NavLink to="/" className={navLinkStyle}>{t('nav_inicio')}</NavLink>
+            <NavLink to="/sobre" className={navLinkStyle}>{t('nav_sobre')}</NavLink>
+            <NavLink to="/servicos" className={navLinkStyle}>{t('nav_servicos')}</NavLink>
             
             <div className="flex items-center gap-3 pl-4 border-l border-gray-200 dark:border-gray-700">
               {/* Language Switcher */}
@@ -95,15 +100,15 @@ export default function Header() {
             </div>
 
             <nav className="flex flex-col items-center justify-center flex-1 gap-8 text-2xl font-bold text-gray-800 dark:text-gray-100">
-              <Link to="/" onClick={closeMenu} className="hover:text-green-700 dark:hover:text-green-400 transition-colors">
+              <NavLink to="/" onClick={closeMenu} className={navLinkStyle}>
                 {t('nav_inicio')}
-              </Link>
-              <Link to="/sobre" onClick={closeMenu} className="hover:text-green-700 dark:hover:text-green-400 transition-colors">
+              </NavLink>
+              <NavLink to="/sobre" onClick={closeMenu} className={navLinkStyle}>
                 {t('nav_sobre')}
-              </Link>
-              <Link to="/servicos" onClick={closeMenu} className="hover:text-green-700 dark:hover:text-green-400 transition-colors">
+              </NavLink>
+              <NavLink to="/servicos" onClick={closeMenu} className={navLinkStyle}>
                 {t('nav_servicos')}
-              </Link>
+              </NavLink>
               <Link to="/contactos" onClick={closeMenu} className="mt-4 bg-green-700 text-white px-8 py-4 rounded-full shadow-xl">
                 {t('nav_contato_btn')}
               </Link>

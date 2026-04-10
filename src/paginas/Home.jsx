@@ -52,21 +52,25 @@ export default function Home() {
           </motion.p>
           
           <motion.div variants={itemVariants} className="flex flex-col sm:flex-row items-center justify-center gap-4">
-            <motion.button 
-              whileHover={{ scale: 1.05 }}
-              whileTap={{ scale: 0.95 }}
-              className="w-full sm:w-auto px-8 py-4 bg-green-700 text-white rounded-full font-bold text-lg shadow-lg shadow-green-700/30 hover:bg-green-800 transition-colors flex items-center justify-center gap-2"
-            >
-              {t('hero_cta_proposal')}
-              <ArrowRight size={20} />
-            </motion.button>
-            <motion.button 
-              whileHover={{ scale: 1.05 }}
-              whileTap={{ scale: 0.95 }}
-              className="w-full sm:w-auto px-8 py-4 bg-white dark:bg-gray-800 text-green-800 dark:text-green-400 border border-gray-200 dark:border-gray-700 rounded-full font-bold text-lg hover:border-green-700 dark:hover:border-green-500 hover:bg-green-50 dark:hover:bg-gray-700 transition-colors"
-            >
-              <Link to="/servicos">{t('hero_cta_services')}</Link>
-            </motion.button>
+            <Link to="/contactos" className="w-full sm:w-auto">
+              <motion.button 
+                whileHover={{ scale: 1.05 }}
+                whileTap={{ scale: 0.95 }}
+                className="w-full px-8 py-4 bg-green-700 text-white rounded-full font-bold text-lg shadow-lg shadow-green-700/30 hover:bg-green-800 transition-colors flex items-center justify-center gap-2"
+              >
+                {t('hero_cta_proposal')}
+                <ArrowRight size={20} />
+              </motion.button>
+            </Link>
+            <Link to="/servicos" className="w-full sm:w-auto">
+              <motion.button 
+                whileHover={{ scale: 1.05 }}
+                whileTap={{ scale: 0.95 }}
+                className="w-full px-8 py-4 bg-white dark:bg-gray-800 text-green-800 dark:text-green-400 border border-gray-200 dark:border-gray-700 rounded-full font-bold text-lg hover:border-green-700 dark:hover:border-green-500 hover:bg-green-50 dark:hover:bg-gray-700 transition-colors"
+              >
+                {t('hero_cta_services')}
+              </motion.button>
+            </Link>
           </motion.div>
         </motion.div>
       </section>
@@ -204,13 +208,20 @@ export default function Home() {
             <p className="text-green-100 text-lg mb-10 max-w-2xl mx-auto">
               {t('cta_banner_text')}
             </p>
-            <motion.button 
-              whileHover={{ scale: 1.05 }}
-              whileTap={{ scale: 0.95 }}
-              className="px-8 py-4 bg-white text-green-800 rounded-full font-bold text-lg shadow-lg hover:shadow-xl transition-all"
+            <a 
+              href="https://wa.me/258877115816" 
+              target="_blank" 
+              rel="noopener noreferrer"
+              className="inline-block"
             >
-              {t('cta_banner_btn')}
-            </motion.button>
+              <motion.button 
+                whileHover={{ scale: 1.05 }}
+                whileTap={{ scale: 0.95 }}
+                className="px-8 py-4 bg-white text-green-800 rounded-full font-bold text-lg shadow-lg hover:shadow-xl transition-all"
+              >
+                {t('cta_banner_btn')}
+              </motion.button>
+            </a>
           </div>
         </motion.div>
       </section>

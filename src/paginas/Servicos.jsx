@@ -2,6 +2,7 @@ import React, { useState } from 'react'
 // eslint-disable-next-line no-unused-vars
 import { motion, AnimatePresence } from 'framer-motion'
 import { Shield, Recycle, BarChart3, Globe, ClipboardCheck, X, ArrowRight, MessageCircle } from 'lucide-react'
+import { Link } from 'react-router-dom'
 import { useTranslation } from 'react-i18next'
 
 export default function Servicos() {
@@ -132,10 +133,17 @@ export default function Servicos() {
               {t('services_cta_unsure_desc')}
             </p>
           </div>
-          <button className="whitespace-nowrap bg-green-700 text-white px-8 py-4 rounded-2xl font-bold text-lg hover:bg-green-800 transition-all flex items-center gap-3">
-            <MessageCircle size={24} />
-            {t('cta_whatsapp')}
-          </button>
+          <a 
+            href="https://wa.me/258877115816" 
+            target="_blank" 
+            rel="noopener noreferrer"
+            className="inline-block"
+          >
+            <button className="whitespace-nowrap bg-green-700 text-white px-8 py-4 rounded-2xl font-bold text-lg hover:bg-green-800 transition-all flex items-center gap-3">
+              <MessageCircle size={24} />
+              {t('cta_whatsapp')}
+            </button>
+          </a>
         </div>
 
       </div>
@@ -184,9 +192,11 @@ export default function Servicos() {
                 ))}
               </div>
 
-              <button className="w-full bg-green-700 text-white py-5 rounded-2xl font-bold text-xl hover:bg-green-800 transition-all shadow-xl shadow-green-700/20">
-                {t('cta_proposal_tech')}
-              </button>
+              <Link to="/contactos" className="block w-full">
+                <button className="w-full bg-green-700 text-white py-5 rounded-2xl font-bold text-xl hover:bg-green-800 transition-all shadow-xl shadow-green-700/20">
+                  {t('cta_proposal_tech')}
+                </button>
+              </Link>
             </motion.div>
           </motion.div>
         )}
